@@ -11,14 +11,14 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
 
 
-class Ui_MainWindow(object):
-    def setupUi(self, MainWindow):
-        MainWindow.setObjectName("MainWindow")
-        MainWindow.resize(867, 800)
+class Ui_ControlPanelWindow(object):
+    def setupUi(self, ControlPanelWindow):
+        ControlPanelWindow.setObjectName("ControlPanelWindow")
+        ControlPanelWindow.resize(867, 800)
         font = QtGui.QFont()
         font.setPointSize(12)
-        MainWindow.setFont(font)
-        self.centralwidget = QtWidgets.QWidget(MainWindow)
+        ControlPanelWindow.setFont(font)
+        self.centralwidget = QtWidgets.QWidget(ControlPanelWindow)
         self.centralwidget.setObjectName("centralwidget")
         self.gridLayout = QtWidgets.QGridLayout(self.centralwidget)
         self.gridLayout.setObjectName("gridLayout")
@@ -90,33 +90,42 @@ class Ui_MainWindow(object):
         self.configuration_pushButton.setObjectName("configuration_pushButton")
         self.gridLayout_3.addWidget(self.pushBtn_frame, 0, 1, 1, 1)
         self.gridLayout.addWidget(self.frame_overall, 0, 0, 1, 1)
-        MainWindow.setCentralWidget(self.centralwidget)
-        self.menubar = QtWidgets.QMenuBar(MainWindow)
-        self.menubar.setGeometry(QtCore.QRect(0, 0, 867, 27))
+        ControlPanelWindow.setCentralWidget(self.centralwidget)
+        self.menubar = QtWidgets.QMenuBar(ControlPanelWindow)
+        self.menubar.setGeometry(QtCore.QRect(0, 0, 867, 24))
         self.menubar.setObjectName("menubar")
-        MainWindow.setMenuBar(self.menubar)
-        self.statusbar = QtWidgets.QStatusBar(MainWindow)
+        self.menuFile = QtWidgets.QMenu(self.menubar)
+        self.menuFile.setObjectName("menuFile")
+        ControlPanelWindow.setMenuBar(self.menubar)
+        self.statusbar = QtWidgets.QStatusBar(ControlPanelWindow)
         self.statusbar.setObjectName("statusbar")
-        MainWindow.setStatusBar(self.statusbar)
+        ControlPanelWindow.setStatusBar(self.statusbar)
+        self.actionQuit = QtWidgets.QAction(ControlPanelWindow)
+        self.actionQuit.setObjectName("actionQuit")
+        self.menuFile.addAction(self.actionQuit)
+        self.menubar.addAction(self.menuFile.menuAction())
 
-        self.retranslateUi(MainWindow)
-        QtCore.QMetaObject.connectSlotsByName(MainWindow)
+        self.retranslateUi(ControlPanelWindow)
+        QtCore.QMetaObject.connectSlotsByName(ControlPanelWindow)
 
-    def retranslateUi(self, MainWindow):
+    def retranslateUi(self, ControlPanelWindow):
         _translate = QtCore.QCoreApplication.translate
-        MainWindow.setWindowTitle(_translate("MainWindow", "MainWindow"))
-        self.label_throttle.setText(_translate("MainWindow", "Throttle Percentage:"))
-        self.label_steering.setText(_translate("MainWindow", "Steering Direction:"))
-        self.start_pushButton.setText(_translate("MainWindow", "Start"))
-        self.stop_pushButton.setText(_translate("MainWindow", "Stop"))
-        self.configuration_pushButton.setText(_translate("MainWindow", "Configuration"))
+        ControlPanelWindow.setWindowTitle(_translate("ControlPanelWindow", "MainWindow"))
+        self.label_throttle.setText(_translate("ControlPanelWindow", "Throttle Percentage:"))
+        self.label_steering.setText(_translate("ControlPanelWindow", "Steering Direction:"))
+        self.start_pushButton.setText(_translate("ControlPanelWindow", "Start"))
+        self.stop_pushButton.setText(_translate("ControlPanelWindow", "Stop"))
+        self.configuration_pushButton.setText(_translate("ControlPanelWindow", "Configuration"))
+        self.menuFile.setTitle(_translate("ControlPanelWindow", "File"))
+        self.actionQuit.setText(_translate("ControlPanelWindow", "Quit"))
+        self.actionQuit.setShortcut(_translate("ControlPanelWindow", "Esc"))
 
 
 if __name__ == "__main__":
     import sys
     app = QtWidgets.QApplication(sys.argv)
-    MainWindow = QtWidgets.QMainWindow()
-    ui = Ui_MainWindow()
-    ui.setupUi(MainWindow)
-    MainWindow.show()
+    ControlPanelWindow = QtWidgets.QMainWindow()
+    ui = Ui_ControlPanelWindow()
+    ui.setupUi(ControlPanelWindow)
+    ControlPanelWindow.show()
     sys.exit(app.exec_())

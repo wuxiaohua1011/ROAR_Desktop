@@ -66,12 +66,18 @@ class Ui_MainWindow(object):
         self.verticalLayout.addWidget(self.outerframe)
         MainWindow.setCentralWidget(self.centralwidget)
         self.menubar = QtWidgets.QMenuBar(MainWindow)
-        self.menubar.setGeometry(QtCore.QRect(0, 0, 711, 21))
+        self.menubar.setGeometry(QtCore.QRect(0, 0, 711, 22))
         self.menubar.setObjectName("menubar")
+        self.menuFile = QtWidgets.QMenu(self.menubar)
+        self.menuFile.setObjectName("menuFile")
         MainWindow.setMenuBar(self.menubar)
         self.statusbar = QtWidgets.QStatusBar(MainWindow)
         self.statusbar.setObjectName("statusbar")
         MainWindow.setStatusBar(self.statusbar)
+        self.actionQuit = QtWidgets.QAction(MainWindow)
+        self.actionQuit.setObjectName("actionQuit")
+        self.menuFile.addAction(self.actionQuit)
+        self.menubar.addAction(self.menuFile.menuAction())
 
         self.retranslateUi(MainWindow)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
@@ -82,6 +88,9 @@ class Ui_MainWindow(object):
         self.pushbtn_simconfig.setText(_translate("MainWindow", "ROAR Simulation Configuration"))
         self.pushbtn_jetsonconfig.setText(_translate("MainWindow", "ROAR Jetson Configuration"))
         self.label.setText(_translate("MainWindow", "   Welcom to ROAR GUI"))
+        self.menuFile.setTitle(_translate("MainWindow", "File"))
+        self.actionQuit.setText(_translate("MainWindow", "Quit"))
+        self.actionQuit.setShortcut(_translate("MainWindow", "Esc"))
 
 
 if __name__ == "__main__":
