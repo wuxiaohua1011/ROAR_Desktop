@@ -23,30 +23,10 @@ class Launcher:
         app = QtWidgets.QApplication([])
         from control.main_menu_panel_control import MainMenuWindow
         from control.control_panel_control import ControlPanelWindow
-        _ = ControlPanelWindow(app)
+        _ = MainMenuWindow(app)
         app.exec()
 
 
 if __name__ == "__main__":
     launcher = Launcher(debug=True)
     launcher.run(add_debug_path=True)
-    # import numpy as np
-    # import cv2
-    #
-    # cap = cv2.VideoCapture(0)
-    #
-    # while True:
-    #     # Capture frame-by-frame
-    #     ret, frame = cap.read()
-    #
-    #     # Our operations on the frame come here
-    #     gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
-    #
-    #     # Display the resulting frame
-    #     cv2.imshow('frame', gray)
-    #     if cv2.waitKey(1) & 0xFF == ord('q'):
-    #         break
-    #
-    # # When everything done, release the capture
-    # cap.release()
-    # cv2.destroyAllWindows()
