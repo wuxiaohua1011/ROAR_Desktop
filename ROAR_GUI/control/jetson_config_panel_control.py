@@ -23,7 +23,7 @@ class JetsonConfigWindow(BaseWindow):
 
     def fill_config_list(self):
         model_info: Dict[str, PydanticModelEntry] = dict()
-        for key_name, entry in self.jetson_config.schema()['properties'].items():
+        for key_name, entry in self.jetson_config.schema()["properties"].items():
             if "type" not in entry:
                 continue
             model_info[key_name] = PydanticModelEntry.parse_obj(entry)
@@ -31,19 +31,18 @@ class JetsonConfigWindow(BaseWindow):
 
         for name, entry in model_info.items():
             curr_value = model_values[name] if name in model_values else entry.default
-            self.add_entry_to_settings_gui(name=name,
-                                           value=curr_value)
-            #self.test_input_list.append([name,str(curr_value)])
+            self.add_entry_to_settings_gui(name=name, value=curr_value)
+            # self.test_input_list.append([name,str(curr_value)])
             self.setting_dict[name] = curr_value
 
     def add_entry_to_settings_gui(self, name: str, value: Union[str, int, float, bool]):
         label = QtWidgets.QLabel()
         label.setText(name)
-        input_field = QtWidgets.QLineEdit()   #QTextEdit()
+        input_field = QtWidgets.QLineEdit()  # QTextEdit()
         input_field.setText(str(value))
         input_field.setObjectName(name)
         self.setting_list.append(input_field)
-        #input_field.textChanged.connect(self.on_change)
+        # input_field.textChanged.connect(self.on_change)
         self.ui.formLayout.addRow(label, input_field)
 
     # def on_change(self,text): #changes debuging
@@ -51,7 +50,7 @@ class JetsonConfigWindow(BaseWindow):
     #     print(self.setting_list[1].text())
     #     print(self.setting_list[1].objectName())
 
-    def isfloat(self,value): #Check if its float in pushButton_confirm
+    def isfloat(self, value):  # Check if its float in pushButton_confirm
         try:
             float(value)
             return True
@@ -61,11 +60,11 @@ class JetsonConfigWindow(BaseWindow):
     def pushButton_confirm(self):
         self.auto_wire_window(ControlPanelWindow)
         jetson_config_json = {}
-        #print("start print\n")
-        ##test_str = ""
+        # print("start print\n")
+        ## test_str = ""
         for widget in self.setting_list:
             # if isinstance(widget, QtWidgets.QLineEdit):
-            #print(widget.objectName(), ":", widget.text())
+            # print(widget.objectName(), ":", widget.text())
             if widget.text().isnumeric():
                 jetson_config_json[widget.objectName()] = int(widget.text())
             elif self.isfloat(widget.text()):
@@ -77,16 +76,17 @@ class JetsonConfigWindow(BaseWindow):
             else:
                 jetson_config_json[widget.objectName()] = widget.text()
 
-            ##test_str = test_str + "\n" + str(widget.objectName()) + " : " + str(widget.text())
+            # #test_str = test_str + "\n" + str(widget.objectName()) + " : " + str(widget.text())
 
-        #print("\ntest_str= \n", test_str, "\n")
-        #print("\njson= \n", jetson_config_json, "\n")
-        #print("\n end print\n")
+        # print("\ntest_str= \n", test_str, "\n")
+        # print("\njson= \n", jetson_config_json, "\n")
+        # print("\n end print\n")
 
         json_object = json.dumps(jetson_config_json, indent=2)
-        with open("../../ROAR_Jetson/configurations/configuration_test.json", "w") as outfile:
+        with open(
+            "../../ROAR_Jetson/configurations/configuration_test.json", "w"
+        ) as outfile:
             outfile.write(json_object)
-
 
     def auto_wire_window(self, target_window):
         target_app = target_window(self.app)
