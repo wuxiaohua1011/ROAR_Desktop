@@ -7,10 +7,14 @@ from control.simulation_config_panel_control import SimConfigWindow
 
 class MainMenuWindow(BaseWindow):
     def __init__(
-            self, app: QtWidgets.QApplication, **kwargs,
+        self,
+        app: QtWidgets.QApplication,
+        **kwargs,
     ):
         super().__init__(
-            app=app, UI=Ui_MainWindow, **kwargs,
+            app=app,
+            UI=Ui_MainWindow,
+            **kwargs,
         )
         self.kwargs = kwargs
         self.dialogs = list()
