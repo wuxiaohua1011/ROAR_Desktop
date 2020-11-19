@@ -9,8 +9,8 @@ from typing import Dict, Union
 
 
 class JetsonConfigWindow(BaseWindow):
-    def __init__(self, app: QtWidgets.QApplication):
-        super().__init__(app, Ui_JetsonConfigWindow)
+    def __init__(self, app: QtWidgets.QApplication, **kwargs):
+        super().__init__(app, Ui_JetsonConfigWindow, **kwargs)
         self.setting_list = []
         self.setting_dict = dict()
         self.dialogs = list()
