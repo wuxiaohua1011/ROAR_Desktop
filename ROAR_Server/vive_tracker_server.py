@@ -34,16 +34,29 @@ class ViveTrackerServer(ROARServer):
 
     """
 
-    def __init__(self, host: str, port: int, record_data: bool = False,
+    def __init__(self, port, buffer_length: int = 1024, should_record: bool = False,
                  output_file_path: Path = Path("./data/RFS_track.txt")):
-        super().__init__(host, port)
+        """
+        Initialize socket and OpenVR
+        
+        Args:
+            port: desired port to open
+            buffer_length: maximum buffer (tracker_name) that it can listen to at once
+            should_record: should record data or not
+            output_file_path: output file's path
+        """
+        super(ViveTrackerServer, self).__init__()
+        self.port = port
+        self.socket = self.initialize_socket()
+        self.logger = logging.getLogger("ViveTrackerServer")
         self.triad_openvr: Optional[TriadOpenVR] = self.reconnect_triad_vr(debug=True)
-        self.record_data = record_data
+        self.should_record = should_record
         self.output_file_path = output_file_path
         self.output_file = None
-        if record_data and self.output_file_path.exists() is False:
+        if should_record and self.output_file_path.exists() is False:
             self.output_file_path.parent.mkdir(parents=True, exist_ok=True)
         self.output_file = self.output_file_path.open('w')
+        self.buffer_length = buffer_length
 
     def run(self):
         """
@@ -51,18 +64,30 @@ class ViveTrackerServer(ROARServer):
 
         This server can be put into a multi-process module to run concurrently with other servers.
 
+        This server will listen for client's request for a specific tracker's name
+
+        It will compute that tracker's information
+
+        It will then send that information
         Returns:
             None
         """
         while True:
-            for tracker_name in self.get_tracker_names():
-                message = self.poll(tracker_name)
-                self.logger.info(message)
-                if message is not None:
-                    socket_message = self.construct_socket_msg(message)
-                    self.socket.sendto(socket_message.encode(), (self.host, self.port))
-                    if self.record_data:
-                        self.record(message)
+            try:
+                tracker_name, addr = self.socket.recvfrom(self.buffer_length)
+                tracker_name = tracker_name.decode()
+                if tracker_name in self.get_tracker_names():
+                    message = self.poll(tracker_name=tracker_name)
+                    self.logger.info(message)
+                    if message is not None:
+                        socket_message = self.construct_socket_msg(data=message)
+                        self.socket.sendto(socket_message.encode(), address=addr)
+                    if self.should_record:
+                        self.record(data=message)
+                else:
+                    self.logger.error(f"Tracker [{tracker_name}] not found")
+            except Exception as e:
+                self.logger.error(e)
 
     def poll(self, tracker_name) -> Optional[ViveTrackerMessage]:
         """
@@ -202,8 +227,8 @@ class ViveTrackerServer(ROARServer):
 
 
 if __name__ == "__main__":
-    HOST, PORT = "192.168.1.19", 8000
-    vive_tracker_server = ViveTrackerServer(host=HOST, port=PORT, record_data=False)
+    HOST, PORT = "192.168.42.6", 8000  # need to put jetson nano's address here
+    vive_tracker_server = ViveTrackerServer(port=PORT, should_record=False)
     logging.basicConfig(format='%(asctime)s|%(name)s|%(levelname)s|%(message)s',
                         datefmt="%H:%M:%S", level=logging.INFO)
     vive_tracker_server.run()
