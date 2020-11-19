@@ -11,6 +11,7 @@ cap = cv2.VideoCapture(0)
 
 # cap1 = cv2.VideoCapture(1)
 
+
 class ControlPanelWindow(BaseWindow):
     def __init__(self, app: QtWidgets.QApplication):
         super().__init__(app, Ui_ControlPanelWindow)
@@ -38,7 +39,6 @@ class ControlPanelWindow(BaseWindow):
 
     def set_listener(self):
         super(ControlPanelWindow, self).set_listener()
-
 
     @pyqtSlot(QImage)
     def set_front_camera_image(self, image):
@@ -69,9 +69,12 @@ class Thread(QThread):
                 rgbImage = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
                 h, w, ch = rgbImage.shape
                 bytesPerLine = ch * w
-                convertToQtFormat = QImage(rgbImage.data, w, h, bytesPerLine, QImage.Format_RGB888)
+                convertToQtFormat = QImage(
+                    rgbImage.data, w, h, bytesPerLine, QImage.Format_RGB888
+                )
                 p = convertToQtFormat.scaled(640, 480, Qt.KeepAspectRatio)
                 self.changePixmap.emit(p)
+
 
 # class WorkerSignals(QtCore.QObject):
 #     """
