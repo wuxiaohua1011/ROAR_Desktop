@@ -12,6 +12,7 @@ class BaseWindow(QtWidgets.QMainWindow):
             app: QApplication,
             UI,
             show=True,
+            **kwargs
     ):
         """
         Args:
