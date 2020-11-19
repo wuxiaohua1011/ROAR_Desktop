@@ -10,7 +10,9 @@ from pathlib import Path
 
 
 class SimConfigWindow(BaseWindow):
-    def __init__(self, app: QtWidgets.QApplication, sim_json_config_file_path: Path, **kwargs):
+    def __init__(
+        self, app: QtWidgets.QApplication, sim_json_config_file_path: Path, **kwargs
+    ):
         super().__init__(app, Ui_SimulationConfigWindow, **kwargs)
         self.setting_list = []
         self.setting_dict = dict()
@@ -28,18 +30,18 @@ class SimConfigWindow(BaseWindow):
 
     def fill_config_list(self) -> Dict[str, Any]:
         model_info: Dict[str, Any] = dict()
-        for key_name, entry in self.simulation_config.schema()['properties'].items():
+        for key_name, entry in self.simulation_config.schema()["properties"].items():
             if "type" not in entry:
                 continue
-            model_info[key_name] = entry['title'] #PydanticModelEntry.parse_obj(entry)
-            #pprint(entry)
+            model_info[key_name] = entry["title"]  # PydanticModelEntry.parse_obj(entry)
+            # pprint(entry)
 
-        json_dict: dict = json.load(self.json_config_file_path.open('r'))
+        json_dict: dict = json.load(self.json_config_file_path.open("r"))
         for key_name, entry in json_dict.items():
             pass
             model_info[key_name] = entry
             # TODO update model_info
-            #print(key_name, entry)
+            # print(key_name, entry)
         model_values = self.simulation_config.dict()
         # print("len:  ",len(model_info.items()))
         ##print(self.test_input_list)
@@ -48,8 +50,7 @@ class SimConfigWindow(BaseWindow):
         for name, entry in model_info.items():
             # TODO do not populate if it is not of type [int, float, string, bool]
             curr_value = model_values[name] if name in model_values else entry.default
-            self.add_entry_to_settings_gui(name=name,
-                                           value=curr_value)
+            self.add_entry_to_settings_gui(name=name, value=curr_value)
             # self.test_input_list.append([name,str(curr_value)])
 
             self.setting_dict[name] = curr_value
@@ -127,19 +128,16 @@ class SimConfigWindow(BaseWindow):
             "sun_altitude_angle": 90,
             "fog_density": 0,
             "fog_distance": 0,
-            "wetness": 0
+            "wetness": 0,
         }
-        sim_config_json["color"] = {
-            "r": 255,
-            "g": 0,
-            "b": 0,
-            "a": 255
-        }
+        sim_config_json["color"] = {"r": 255, "g": 0, "b": 0, "a": 255}
         json_object = json.dumps(sim_config_json, indent=2)
         # current C:\Users\Zetian\Desktop\project\ROAR\ROAR_Desktop\ROAR_GUI
         # need    C:\Users\Zetian\Desktop\project\ROAR\ROAR_Sim\configurations
         # pathlib
-        with open("../../ROAR_Sim/configurations/configuration_test.json", "w") as outfile:
+        with open(
+            "../../ROAR_Sim/configurations/configuration_test.json", "w"
+        ) as outfile:
             outfile.write(json_object)
 
     def auto_wire_window(self, target_window):
