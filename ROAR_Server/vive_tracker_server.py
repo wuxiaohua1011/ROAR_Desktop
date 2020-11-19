@@ -23,7 +23,7 @@ import json
 from pprint import pprint
 from ROAR_Desktop.ROAR_Server.base_server import ROARServer
 from typing import List
-
+import socket
 
 class ViveTrackerServer(ROARServer):
     """
@@ -45,8 +45,7 @@ class ViveTrackerServer(ROARServer):
             should_record: should record data or not
             output_file_path: output file's path
         """
-        super(ViveTrackerServer, self).__init__()
-        self.port = port
+        super(ViveTrackerServer, self).__init__(port)
         self.socket = self.initialize_socket()
         self.logger = logging.getLogger("ViveTrackerServer")
         self.triad_openvr: Optional[TriadOpenVR] = self.reconnect_triad_vr(debug=True)
@@ -81,11 +80,13 @@ class ViveTrackerServer(ROARServer):
                     self.logger.info(message)
                     if message is not None:
                         socket_message = self.construct_socket_msg(data=message)
-                        self.socket.sendto(socket_message.encode(), address=addr)
+                        self.socket.sendto(socket_message.encode(), addr)
                     if self.should_record:
                         self.record(data=message)
                 else:
                     self.logger.error(f"Tracker [{tracker_name}] not found")
+            except TimeoutError as e:
+                self.logger.info("Did not receive connection from client")
             except Exception as e:
                 self.logger.error(e)
 
@@ -227,7 +228,7 @@ class ViveTrackerServer(ROARServer):
 
 
 if __name__ == "__main__":
-    HOST, PORT = "192.168.42.6", 8000  # need to put jetson nano's address here
+    PORT = 8000  # need to put jetson nano's address here
     vive_tracker_server = ViveTrackerServer(port=PORT, should_record=False)
     logging.basicConfig(format='%(asctime)s|%(name)s|%(levelname)s|%(message)s',
                         datefmt="%H:%M:%S", level=logging.INFO)
