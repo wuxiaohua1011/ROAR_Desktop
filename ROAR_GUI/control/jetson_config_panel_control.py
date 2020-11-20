@@ -1,4 +1,4 @@
-from ROAR_Desktop.ROAR_GUI.control.utilities import ConfigWindow
+from ROAR_Desktop.ROAR_GUI.control.gui_utilities import ConfigWindow
 from PyQt5 import QtCore, QtGui, QtWidgets
 from ROAR_Desktop.ROAR_GUI.view.jetson_config_panel import Ui_JetsonConfigWindow
 from ROAR_Desktop.ROAR_GUI.control.agent_config_panel import AgentConfigWindow

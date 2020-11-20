@@ -1,6 +1,6 @@
 from ROAR_Desktop.ROAR_GUI.view.main_menu_panel import Ui_MainWindow
 from PyQt5 import QtCore, QtGui, QtWidgets
-from ROAR_Desktop.ROAR_GUI.control.utilities import BaseWindow
+from ROAR_Desktop.ROAR_GUI.control.gui_utilities import BaseWindow
 from ROAR_Desktop.ROAR_GUI.control.jetson_config_panel_control import JetsonConfigWindow
 from ROAR_Desktop.ROAR_GUI.control.simulation_config_panel_control import SimConfigWindow
 from pathlib import Path

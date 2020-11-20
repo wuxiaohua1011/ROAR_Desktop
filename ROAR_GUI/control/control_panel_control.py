@@ -1,4 +1,4 @@
-from ROAR_Desktop.ROAR_GUI.control.utilities import BaseWindow, KeyboardControl
+from ROAR_Desktop.ROAR_GUI.control.gui_utilities import BaseWindow, KeyboardControl
 from PyQt5 import QtCore, QtGui, QtWidgets
 from ROAR_Desktop.ROAR_GUI.view.control_panel import Ui_ControlPanelWindow
 from typing import Optional

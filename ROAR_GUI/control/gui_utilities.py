@@ -68,12 +68,10 @@ class ConfigWindow(BaseWindow):
         self.config = ConfigModel()
         self.config_json_file_path = config_json_file_path
         self.fill_config_list()
-        self.kwargs["agent_config_path"] = self.config.agent_config_path
 
     def fill_config_list(self):
         model_info: Dict[str, Union[str, int, float, bool]] = dict()
         self.config.parse_file(self.config_json_file_path)
-
         for key_name, entry in self.config.dict().items():
             if type(entry) in [str, int, float, bool]:
                 model_info[key_name] = entry
@@ -87,7 +85,6 @@ class ConfigWindow(BaseWindow):
         for key_name in curr_config.keys():
             line_edit: Optional[QtWidgets.QLineEdit] = self.findChild(QtWidgets.QLineEdit, key_name)
             if line_edit is not None:
-                print(line_edit.text())
                 curr_config[key_name] = line_edit.text()
         self.config = self.config.parse_obj(curr_config)
 

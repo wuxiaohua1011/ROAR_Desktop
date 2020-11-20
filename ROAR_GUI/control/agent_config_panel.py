@@ -1,4 +1,4 @@
-from ROAR_Desktop.ROAR_GUI.control.utilities import BaseWindow, ConfigWindow
+from ROAR_Desktop.ROAR_GUI.control.gui_utilities import BaseWindow, ConfigWindow
 from PyQt5 import QtCore, QtGui, QtWidgets
 from ROAR_Desktop.ROAR_GUI.view.agent_config_panel import Ui_AgentConfigWindow
 from ROAR.configurations.configuration import Configuration as AgentConfigModel

@@ -1,4 +1,4 @@
-from ROAR_Desktop.ROAR_GUI.control.utilities import ConfigWindow
+from ROAR_Desktop.ROAR_GUI.control.gui_utilities import ConfigWindow
 from PyQt5 import QtCore, QtGui, QtWidgets
 from ROAR_Desktop.ROAR_GUI.view.simulation_config_panel import Ui_SimulationConfigWindow
 from ROAR_Sim.configurations.configuration import Configuration as SimulationConfig
