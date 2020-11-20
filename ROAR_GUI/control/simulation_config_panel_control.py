@@ -5,26 +5,27 @@ from ROAR_Sim.configurations.configuration import Configuration as SimulationCon
 from pprint import pprint
 import json
 from typing import Dict, Union
-
+from pathlib import Path
 
 class SimConfigWindow(BaseWindow):
-    def __init__(self, app: QtWidgets.QApplication):
+    def __init__(self, app: QtWidgets.QApplication, sim_config_json_file_path: Path):
         super().__init__(app, Ui_SimulationConfigWindow)
-
         self.simulation_config = SimulationConfig()
+        self.simulation_config_json_file_path = sim_config_json_file_path
         self.fill_config_list()
 
+
     def fill_config_list(self):
-        model_info: Dict[str, PydanticModelEntry] = dict()
-        for key_name, entry in self.simulation_config.schema()['properties'].items():
-            if "type" not in entry:
-                continue
-            model_info[key_name] = PydanticModelEntry.parse_obj(entry)
-        model_values = self.simulation_config.dict()
+        model_info: Dict[str, Union[str, int, float, bool]] = dict()
+        self.simulation_config.parse_file(self.simulation_config_json_file_path)
+
+        for key_name, entry in self.simulation_config.dict().items():
+            if type(entry) in [str, int, float, bool]:
+                model_info[key_name] = entry
 
         for name, entry in model_info.items():
             self.add_entry_to_settings_gui(name=name,
-                                           value=model_values[name] if name in model_values else entry.default)
+                                           value=entry)
 
     def add_entry_to_settings_gui(self, name: str, value: Union[str, int, float, bool]):
         label = QtWidgets.QLabel()

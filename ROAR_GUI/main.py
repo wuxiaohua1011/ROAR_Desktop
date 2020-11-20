@@ -23,7 +23,10 @@ class Launcher:
         app = QtWidgets.QApplication([])
         from control.main_menu_panel_control import MainMenuWindow
         from control.control_panel_control import ControlPanelWindow
-        _ = MainMenuWindow(app)
+        _ = MainMenuWindow(app, sim_config_json_file_path=Path(os.getcwd()).parent.parent /
+                                                          "ROAR_Sim" / "configurations" / "configuration.json",
+                           jetson_config_json_file_path=Path(os.getcwd()).parent.parent / "ROAR_Jetson" /
+                                                        "configurations" / "configuration.json")
         app.exec()
 
 

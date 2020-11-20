@@ -3,16 +3,20 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 from control.utilities import BaseWindow
 from control.jetson_config_panel_control import JetsonConfigWindow
 from control.simulation_config_panel_control import SimConfigWindow
-
+from pathlib import Path
 
 class MainMenuWindow(BaseWindow):
     def __init__(
-            self, app: QtWidgets.QApplication, **kwargs,
+            self, app: QtWidgets.QApplication, sim_config_json_file_path: Path, jetson_config_json_file_path:Path,
+            **kwargs,
     ):
         super().__init__(
             app=app, UI=Ui_MainWindow, **kwargs,
         )
+
         self.kwargs = kwargs
+        self.kwargs["sim_config_json_file_path"] = sim_config_json_file_path
+        self.kwargs["jetson_config_json_file_path"] = jetson_config_json_file_path
         self.dialogs = list()
 
     def set_listener(self):

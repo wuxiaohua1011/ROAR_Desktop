@@ -6,13 +6,14 @@ from ROAR_Jetson.configurations.configuration import Configuration as JetsonConf
 from pprint import pprint
 import json
 from typing import Dict, Union
-
+from pathlib import Path
 
 class JetsonConfigWindow(BaseWindow):
-    def __init__(self, app: QtWidgets.QApplication):
-        super().__init__(app, Ui_JetsonConfigWindow)
+    def __init__(self, app: QtWidgets.QApplication, jetson_config_json_file_path:Path, **kwargs):
+        super().__init__(app, Ui_JetsonConfigWindow, **kwargs)
         self.dialogs = list()
         self.jetson_config = JetsonConfigModel()
+        self.jetson_config_json_file_path:Path = jetson_config_json_file_path
         self.fill_config_list()
 
     def set_listener(self):
@@ -20,16 +21,14 @@ class JetsonConfigWindow(BaseWindow):
         self.ui.pushButton_confirm.clicked.connect(self.pushButton_confirm)
 
     def fill_config_list(self):
-        model_info: Dict[str, PydanticModelEntry] = dict()
-        for key_name, entry in self.jetson_config.schema()['properties'].items():
-            if "type" not in entry:
-                continue
-            model_info[key_name] = PydanticModelEntry.parse_obj(entry)
-        model_values = self.jetson_config.dict()
+        model_info: Dict[str, Union[str, int, float, bool]] = dict()
+        self.jetson_config.parse_file(self.jetson_config_json_file_path)
+        for key_name, entry in self.jetson_config.dict().items():
+            if type(entry) in [str, int, float, bool]:
+                model_info[key_name] = entry
 
         for name, entry in model_info.items():
-            self.add_entry_to_settings_gui(name=name,
-                                           value=model_values[name] if name in model_values else entry.default)
+            self.add_entry_to_settings_gui(name=name, value=entry)
 
     def add_entry_to_settings_gui(self, name: str, value: Union[str, int, float, bool]):
         label = QtWidgets.QLabel()
