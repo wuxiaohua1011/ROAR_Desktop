@@ -60,6 +60,9 @@
             </item>
             <item>
              <widget class="QDoubleSpinBox" name="throttle_value">
+              <property name="focusPolicy">
+               <enum>Qt::NoFocus</enum>
+              </property>
               <property name="decimals">
                <number>2</number>
               </property>
@@ -98,6 +101,9 @@
             </item>
             <item>
              <widget class="QDoubleSpinBox" name="steering_value">
+              <property name="focusPolicy">
+               <enum>Qt::NoFocus</enum>
+              </property>
               <property name="minimum">
                <double>-1.000000000000000</double>
               </property>

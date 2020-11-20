@@ -47,6 +47,9 @@ class Ui_SimulationConfigWindow(object):
         SimulationConfigWindow.setStatusBar(self.statusbar)
         self.actionQuit = QtWidgets.QAction(SimulationConfigWindow)
         self.actionQuit.setObjectName("actionQuit")
+        self.actionSave = QtWidgets.QAction(SimulationConfigWindow)
+        self.actionSave.setObjectName("actionSave")
+        self.menuFile.addAction(self.actionSave)
         self.menuFile.addAction(self.actionQuit)
         self.menubar.addAction(self.menuFile.menuAction())
 
@@ -61,6 +64,8 @@ class Ui_SimulationConfigWindow(object):
         self.menuFile.setTitle(_translate("SimulationConfigWindow", "File"))
         self.actionQuit.setText(_translate("SimulationConfigWindow", "Quit"))
         self.actionQuit.setShortcut(_translate("SimulationConfigWindow", "Esc"))
+        self.actionSave.setText(_translate("SimulationConfigWindow", "Save"))
+        self.actionSave.setShortcut(_translate("SimulationConfigWindow", "Ctrl+S"))
 
 
 if __name__ == "__main__":

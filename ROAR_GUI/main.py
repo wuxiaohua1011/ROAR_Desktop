@@ -31,5 +31,8 @@ class Launcher:
 
 
 if __name__ == "__main__":
+    logging.basicConfig(format='[%(asctime)s] - [%(levelname)s] - [%(name)s] '
+                               '- %(message)s',
+                        level=logging.DEBUG)
     launcher = Launcher(debug=True)
     launcher.run(add_debug_path=True)

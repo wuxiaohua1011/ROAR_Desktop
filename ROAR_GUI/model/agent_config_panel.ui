@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>SimulationConfigWindow</class>
- <widget class="QMainWindow" name="SimulationConfigWindow">
+ <class>AgentConfigWindow</class>
+ <widget class="QMainWindow" name="AgentConfigWindow">
   <property name="geometry">
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>804</width>
-    <height>623</height>
+    <width>817</width>
+    <height>699</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -18,28 +18,35 @@
     <property name="geometry">
      <rect>
       <x>30</x>
-      <y>30</y>
-      <width>681</width>
-      <height>531</height>
+      <y>20</y>
+      <width>771</width>
+      <height>631</height>
      </rect>
     </property>
     <layout class="QHBoxLayout" name="horizontalLayout">
+     <property name="sizeConstraint">
+      <enum>QLayout::SetNoConstraint</enum>
+     </property>
      <item>
-      <layout class="QFormLayout" name="formLayout"/>
+      <layout class="QFormLayout" name="formLayout">
+       <property name="verticalSpacing">
+        <number>5</number>
+       </property>
+      </layout>
      </item>
      <item>
       <layout class="QVBoxLayout" name="verticalLayout_2">
        <item>
         <widget class="QPushButton" name="pushButton_confirm">
          <property name="text">
-          <string>confirm</string>
+          <string>Confim</string>
          </property>
         </widget>
        </item>
        <item>
-        <widget class="QPushButton" name="pusbButton_reset">
+        <widget class="QPushButton" name="pushButton_reset">
          <property name="text">
-          <string>reset</string>
+          <string>Reset</string>
          </property>
         </widget>
        </item>
@@ -53,7 +60,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>804</width>
+     <width>817</width>
      <height>22</height>
     </rect>
    </property>
