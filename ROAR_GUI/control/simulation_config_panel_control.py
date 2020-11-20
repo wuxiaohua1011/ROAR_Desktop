@@ -1,12 +1,12 @@
-from control.utilities import ConfigWindow
+from ROAR_Desktop.ROAR_GUI.control.utilities import ConfigWindow
 from PyQt5 import QtCore, QtGui, QtWidgets
-from view.simulation_config_panel import Ui_SimulationConfigWindow
+from ROAR_Desktop.ROAR_GUI.view.simulation_config_panel import Ui_SimulationConfigWindow
 from ROAR_Sim.configurations.configuration import Configuration as SimulationConfig
 from pprint import pprint
 import json
 from typing import Dict, Union
 from pathlib import Path
-from control.agent_config_panel import AgentConfigWindow
+from ROAR_Desktop.ROAR_GUI.control.agent_config_panel import AgentConfigWindow
 
 
 class SimConfigWindow(ConfigWindow):
@@ -15,5 +15,9 @@ class SimConfigWindow(ConfigWindow):
                                               UI=Ui_SimulationConfigWindow,
                                               config_json_file_path=kwargs["sim_config_json_file_path"],
                                               ConfigModel=SimulationConfig,
-                                              NextWindowClass=AgentConfigWindow
+                                              NextWindowClass=AgentConfigWindow,
+                                              **kwargs
                                               )
+    def pushButton_confirm(self):
+        self.kwargs["agent_config_json_file_path"] = self.config.agent_config_path
+        super(SimConfigWindow, self).pushButton_confirm()

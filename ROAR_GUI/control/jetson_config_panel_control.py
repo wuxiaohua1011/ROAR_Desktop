@@ -1,7 +1,7 @@
-from control.utilities import ConfigWindow
+from ROAR_Desktop.ROAR_GUI.control.utilities import ConfigWindow
 from PyQt5 import QtCore, QtGui, QtWidgets
-from view.jetson_config_panel import Ui_JetsonConfigWindow
-from control.agent_config_panel import AgentConfigWindow
+from ROAR_Desktop.ROAR_GUI.view.jetson_config_panel import Ui_JetsonConfigWindow
+from ROAR_Desktop.ROAR_GUI.control.agent_config_panel import AgentConfigWindow
 from ROAR_Jetson.configurations.configuration import Configuration as JetsonConfigModel
 from pprint import pprint
 import json
@@ -15,7 +15,10 @@ class JetsonConfigWindow(ConfigWindow):
                                                  UI=Ui_JetsonConfigWindow,
                                                  config_json_file_path=kwargs["jetson_config_json_file_path"],
                                                  ConfigModel=JetsonConfigModel,
-                                                 NextWindowClass=AgentConfigWindow
+                                                 NextWindowClass=AgentConfigWindow,
+                                                 **kwargs
                                                  )
 
-
+    def pushButton_confirm(self):
+        self.kwargs["agent_config_json_file_path"] = self.config.agent_config_path
+        super(JetsonConfigWindow, self).pushButton_confirm()

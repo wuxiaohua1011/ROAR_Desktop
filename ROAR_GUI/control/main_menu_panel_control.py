@@ -1,19 +1,19 @@
-from view.main_menu_panel import Ui_MainWindow
+from ROAR_Desktop.ROAR_GUI.view.main_menu_panel import Ui_MainWindow
 from PyQt5 import QtCore, QtGui, QtWidgets
-from control.utilities import BaseWindow
-from control.jetson_config_panel_control import JetsonConfigWindow
-from control.simulation_config_panel_control import SimConfigWindow
+from ROAR_Desktop.ROAR_GUI.control.utilities import BaseWindow
+from ROAR_Desktop.ROAR_GUI.control.jetson_config_panel_control import JetsonConfigWindow
+from ROAR_Desktop.ROAR_GUI.control.simulation_config_panel_control import SimConfigWindow
 from pathlib import Path
+
 
 class MainMenuWindow(BaseWindow):
     def __init__(
-            self, app: QtWidgets.QApplication, sim_config_json_file_path: Path, jetson_config_json_file_path:Path,
+            self, app: QtWidgets.QApplication, sim_config_json_file_path: Path, jetson_config_json_file_path: Path,
             **kwargs,
     ):
         super().__init__(
             app=app, UI=Ui_MainWindow, **kwargs,
         )
-
         self.kwargs = kwargs
         self.kwargs["sim_config_json_file_path"] = sim_config_json_file_path
         self.kwargs["jetson_config_json_file_path"] = jetson_config_json_file_path
@@ -28,5 +28,3 @@ class MainMenuWindow(BaseWindow):
 
     def btn_jetsonconfig_clicked(self):
         self.auto_wire_window(target_window=JetsonConfigWindow)
-
-

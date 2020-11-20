@@ -1,6 +1,6 @@
-from control.utilities import BaseWindow, KeyboardControl
+from ROAR_Desktop.ROAR_GUI.control.utilities import BaseWindow, KeyboardControl
 from PyQt5 import QtCore, QtGui, QtWidgets
-from view.control_panel import Ui_ControlPanelWindow
+from ROAR_Desktop.ROAR_GUI.view.control_panel import Ui_ControlPanelWindow
 from typing import Optional
 import cv2
 from PyQt5.QtCore import QThread, Qt, pyqtSignal, pyqtSlot

@@ -132,8 +132,6 @@ class ConfigWindow(BaseWindow):
         self.auto_wire_window(self.NextWindowClass)
 
 
-
-
 class KeyboardControl:
     def __init__(self, throttle_increment=0.1, steering_increment=0.1):
         self.logger = logging.getLogger(__name__)
